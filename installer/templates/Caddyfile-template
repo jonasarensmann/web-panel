@@ -1,0 +1,19 @@
+{
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+    acme_dns webpanel {
+        host http://localhost:2021
+        key CHANGETHIS
+    }
+}
+
+http://localhost:2021 {
+    root * /etc/web-panel/interface/public
+    encode zstd gzip
+    php_fastcgi unix//run/php/php8.2-fpm.sock
+    file_server
+ }
+ 
+
+import /etc/caddy/zones/*

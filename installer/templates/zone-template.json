@@ -1,0 +1,24 @@
+{
+  "$origin": "$domain",
+  "$ttl": 3600,
+  "soa": {
+    "mname": "ns1.$domain.",
+    "rname": "hostmaster.$domain.",
+    "serial": "{time}",
+    "refresh": 3600,
+    "retry": 600,
+    "expire": 604800,
+    "minimum": 86400
+  },
+  "ns": [{ "host": "ns1.$domain." }, { "host": "ns2.$domain." }],
+  "a": [
+    { "name": "@", "ip": "$ip" },
+    { "name": "www", "ip": "$ip" },
+    { "name": "ns1", "ip": "$ip" },
+    { "name": "ns2", "ip": "$ip" },
+    { "name": "mail", "ip": "$ip" },
+    { "name": "webmail", "ip": "$ip" }
+  ],
+  "mx": [{ "preference": 10, "host": "mail.$domain." }],
+  "txt": [{ "name": "@", "txt": "\"v=spf1 a mx ip4:$ip ~all\"" }]
+}

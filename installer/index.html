@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style type="text/css">
+      .boxes {
+        background-image: linear-gradient(
+            rgba(80, 80, 80, 1) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to right,
+            rgba(80, 80, 80, 1) 1px,
+            rgba(38, 38, 38, 1) 1px
+          );
+        background-size: 30px 30px;
+        background-position: left -1rem top -1rem;
+      }
+
+      input:checked ~ .dot {
+        transform: translateX(100%);
+        background-color: #48bb78;
+      }
+
+      .required {
+        border-color: #e53e3e !important;
+      }
+
+      .flipping {
+        width: 67.2px;
+        height: 67.2px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+
+      .flipping div {
+        animation: flipping-18i5bq 1.5s calc(var(--delay) * 1s) infinite
+          backwards;
+        background-color: #be1b1b;
+      }
+
+      .flipping div:nth-child(1) {
+        --delay: 0.1;
+      }
+
+      .flipping div:nth-child(2) {
+        --delay: 0.2;
+      }
+
+      .flipping div:nth-child(3) {
+        --delay: 0.3;
+      }
+
+      .flipping div:nth-child(4) {
+        --delay: 0.4;
+      }
+
+      .flipping div:nth-child(5) {
+        --delay: 0.5;
+      }
+
+      .flipping div:nth-child(6) {
+        --delay: 0.6;
+      }
+
+      .flipping div:nth-child(7) {
+        --delay: 0.7;
+      }
+
+      .flipping div:nth-child(8) {
+        --delay: 0.8;
+      }
+
+      .flipping div:nth-child(9) {
+        --delay: 0.9;
+      }
+
+      @keyframes flipping-18i5bq {
+        0% {
+          transform: perspective(67.2px) rotateX(-90deg);
+        }
+
+        50%,
+        75% {
+          transform: perspective(67.2px) rotateX(0);
+        }
+
+        100% {
+          opacity: 0;
+          transform: perspective(67.2px) rotateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="boxes grid h-screen w-screen place-items-center">
+      <div
+        class="h-3/5 w-3/6 rounded-lg border border-neutral-800 bg-gradient-to-br from-neutral-900 to-zinc-800 p-6 shadow-xl relative"
+      >
+        <div id="step-one">
+          <h1 class="text-4xl font-bold text-white">Get Started</h1>
+
+          <h2 class="text-xl text-white mt-1 font-semibold">Create a user</h2>
+          <div class="flex flex-col mt-9 w-3/6 mx-auto">
+            <label for="username" class="mb-1 text-white text-lg"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="username"
+              required
+              placeholder="e.g. admin"
+              class="bg-neutral-700 p-2 rounded-lg border border-neutral-600 placeholder-zinc-400 text-white"
+            />
+            <label for="password" class="mt-5 mb-1 text-white text-lg"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              required
+              class="bg-neutral-700 p-2 rounded-lg border border-neutral-600 placeholder-zinc-400 text-white"
+            />
+            <label for="confirm_password" class="mt-5 mb-1 text-white text-lg"
+              >Cofirm Password</label
+            >
+            <input
+              type="password"
+              id="confirm_password"
+              required
+              class="bg-neutral-700 p-2 rounded-lg border border-neutral-600 placeholder-zinc-400 text-white"
+            />
+          </div>
+        </div>
+
+        <div id="step-two" class="hidden">
+          <h1 class="text-4xl font-bold text-white">Installation settings</h1>
+
+          <h2 class="text-xl text-white mt-1 font-semibold">Add your domain</h2>
+          <div class="flex flex-col mt-9 w-3/6 mx-auto">
+            <input
+              type="text"
+              id="domain"
+              required
+              placeholder="e.g. example.com"
+              class="bg-neutral-700 p-2 rounded-lg border border-neutral-600 placeholder-zinc-400 text-white"
+            />
+
+            <br />
+
+            <h3 class="text-xl text-white mt-5"><span class="text-red-500">Important</span> Setup for your Domain</h3>
+            <p class="text-white mt-2">
+              You need to register custom nameservers with your domain registrar
+              pointing to your server's IP address. The nameservers should be
+              ns1.domain.tld and ns2.domain.tld where domain.tld is your domain.
+              then set the domain to use the custom nameservers.
+            </p>
+          </div>
+        </div>
+
+        <div id="step-three" class="hidden">
+          <h1 class="text-4xl font-bold text-white">Finish installation</h1>
+
+          <h2 class="text-xl text-white mt-1 font-semibold">
+            Check your installation settings
+          </h2>
+          <div class="flex flex-col mt-9 w-3/6 mx-auto text-xl text-white">
+            <p>Username: <span id="final_username"></span></p>
+            <br />
+            <p>Domain: <span id="final_domain"></span></p>
+            <br>
+            <h3 class="text-xl">The following software will be Installed: </h3>
+            <ol class="ml-4 list-disc">
+              <li>Caddy</li>
+              <li>PHP</li>
+              <li>Docker</li>
+              <li>Bind9</li>
+            </ol>
+          </div>
+        </div>
+
+        <div id="installing" class="hidden h-full">
+          <h1 class="text-4xl font-bold text-white">Installing</h1>
+
+          <h2 class="text-xl text-white mt-1 font-semibold">
+            This may take a few minutes
+          </h2>
+          <div
+            class="grid h-4/6 place-items-center mt-9 w-3/6 mx-auto text-xl text-white relative"
+          >
+            <div class="flipping">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+
+            <p class="absolute bottom-16 text-center" id="install_status">
+              Installing...
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="hidden text-red-500 w-3/6 mx-auto mt-3"
+          id="error-text"
+        ></div>
+
+        <div class="absolute bottom-4 right-0 flex justify-end">
+          <button
+            id="back_button"
+            class="text-white text-lg border-zinc-900 border-2 py-2 px-6 rounded transition-colors duration-100 hover:bg-zinc-900 active:bg-zinc-950 mr-4"
+          >
+            Back
+          </button>
+          <button
+            id="next_button"
+            class="text-white text-lg bg-zinc-900 py-2 px-6 rounded transition-colors duration-100 hover:bg-neutral-900 active:bg-zinc-950 mr-4"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      let currentStep = 1;
+
+      function startListenToUpdates() {
+        const interval = setInterval(function () {
+            $.ajax({
+              url: "install/status",
+              type: "GET",
+              success: function (data) {
+                if (data.startsWith("failed")) {
+                  $(".flipping").addClass("hidden");
+                  $("#install_status").html(data);
+                  clearInterval(interval);
+                  return;
+                }
+                if (data == "1") {
+                  $(".flipping").addClass("hidden");
+                  $("#install_status").html(
+                    "Installation complete <br> you may now navigate to <a class='text-blue-400 text-semibold' href='https://" + $("#domain").val() + ":2020'>" + $("#domain").val() + ":2020</a> to access the dashboard <br> The site may be unavailable until the DNS has propagated"
+                  );
+                  clearInterval(interval);
+                  return;
+                }
+                $("#install_status").html(data);
+              },
+            });
+          }, 1000);
+      }
+
+      $.ajax({
+        url: "install/check",
+        type: "GET",
+        success: function (data) {
+          if (data === "true") {
+            $("#installing")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+            $("#next_button").addClass("hidden");
+            $("#back_button").addClass("hidden");
+            $("#step-one").addClass("hidden");
+
+            startListenToUpdates();
+            currentStep = 3;
+          }
+        },
+      });
+
+      $("#next_button").click(function () {
+        $("#error-text").addClass("hidden").html("");
+
+        if (currentStep == 1) {
+          if ($("#password").val() != $("#confirm_password").val()) {
+            $("#error-text")
+              .removeClass("hidden")
+              .html("Passwords do not match");
+            return;
+          }
+
+          $("#step-one input").removeClass("required");
+
+          let empty = false;
+          $("#step-one input").each(function () {
+            if ($(this).val() === "") {
+              $(this).addClass("required");
+              empty = true;
+              $("#error-text")
+                .removeClass("hidden")
+                .html("Please fill in all fields");
+              return;
+            }
+          });
+
+          if (empty) {
+            return;
+          }
+          $("#step-one").animate({ opacity: 0 }, 250, function () {
+            $(this).addClass("hidden");
+            $("#step-two")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+          });
+        }
+        if (currentStep == 2) {
+          $("#final_username").html($("#username").val());
+          $("#final_domain").html($("#domain").val());
+
+          $("#step-two").animate({ opacity: 0 }, 250, function () {
+            $(this).addClass("hidden");
+
+            let empty = false;
+            $("#step-two input").each(function () {
+              if ($(this).val() === "") {
+                $(this).addClass("required");
+                empty = true;
+                $("#error-text")
+                  .removeClass("hidden")
+                  .html("Please fill in all fields");
+                return;
+              }
+            });
+
+            if (empty) {
+              return;
+            }
+
+            $("#step-three")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+            $("#next_button").html("Install");
+          });
+        }
+        if (currentStep == 3) {
+          $("#step-three").animate({ opacity: 0 }, 250, function () {
+            $(this).addClass("hidden");
+            $("#next_button").addClass("hidden");
+            $("#back_button").addClass("hidden");
+            $("#installing")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+          });
+
+          let domain = $("#domain").val();
+
+          let username = $("#username").val();
+          let password = $("#password").val();
+
+          $.ajax({
+            url: "install",
+            type: "POST",
+            data: {
+              domain: domain,
+              username: username,
+              password: password,
+            },
+          });
+
+          startListenToUpdates();
+        }
+        currentStep++;
+      });
+
+      $("#back_button").click(function () {
+        $("#error-text").addClass("hidden").html("");
+        if (currentStep == 1) {
+          return;
+        }
+        if (currentStep == 2) {
+          $("#step-two").animate({ opacity: 0 }, 250, function () {
+            $(this).addClass("hidden");
+            $("#step-one")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+          });
+        }
+        if (currentStep == 3) {
+          $("#step-three").animate({ opacity: 0 }, 250, function () {
+            $(this).addClass("hidden");
+            $("#step-two")
+              .removeClass("hidden")
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500);
+          });
+          $("#next_button").html("Next");
+        }
+
+        currentStep--;
+      });
+    </script>
+  </body>
+</html>
